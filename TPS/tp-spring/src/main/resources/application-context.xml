@@ -10,5 +10,16 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<bean id="guitare" class="spring.formation.orchestre.Guitare"/>
+	
+<!-- 	<bean id="guitariste" class="spring.formation.orchestre.Guitariste"> -->
+<!-- 		<property name="instrument" ref="guitare"/> -->
+<!-- 		<property name="morceau" value="Vive le vent ..."/> -->
+<!-- 	</bean> -->
+
+	<bean id="guitariste" class="spring.formation.orchestre.Guitariste">
+		<constructor-arg ref="guitare"/>
+		<constructor-arg value="Vive le vent ..."/>
+	</bean>
 
 </beans>

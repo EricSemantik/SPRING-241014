@@ -16,7 +16,6 @@ public class Guitariste implements IMusicien {
 		this.instrument = instrument;
 	}
 
-	@Autowired
 	public Guitariste(IInstrument instrument, String morceau) {
 		super();
 		this.instrument = instrument;
@@ -25,7 +24,7 @@ public class Guitariste implements IMusicien {
 
 	@Override
 	public void jouer() {
-		System.out.println("Le guitariste joue : " + this.morceau + "(" + this.instrument.toString() + ")");
+		System.out.println("Le guitariste joue : " + this.morceau + "(" + this.instrument.son() + ")");
 
 	}
 
