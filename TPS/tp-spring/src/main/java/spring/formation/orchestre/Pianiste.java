@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import jakarta.annotation.PostConstruct;
+
 @Component
 public class Pianiste implements IMusicien {
 
@@ -52,6 +54,11 @@ public class Pianiste implements IMusicien {
 
 	public void setMorceau(String morceau) {
 		this.morceau = morceau;
+	}
+	
+	@PostConstruct
+	public void commeVousVoulez() {
+		System.out.println("Pianiste Post Construct : " + this.morceau);
 	}
 	
 }

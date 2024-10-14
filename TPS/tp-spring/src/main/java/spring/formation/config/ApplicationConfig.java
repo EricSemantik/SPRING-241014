@@ -11,7 +11,7 @@ import spring.formation.orchestre.IInstrument;
 import spring.formation.orchestre.IMusicien;
 
 @Configuration
-@ComponentScan("spring.formation.orchestre")
+@ComponentScan("spring.formation")
 public class ApplicationConfig {
 
 	@Bean

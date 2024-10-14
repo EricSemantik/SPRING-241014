@@ -10,6 +10,8 @@
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<context:component-scan base-package="spring.formation.orchestre"/>
+	
 	<bean id="guitare" class="spring.formation.orchestre.Guitare"/>
 	
 <!-- 	<bean id="guitariste" class="spring.formation.orchestre.Guitariste"> -->
@@ -17,9 +19,17 @@
 <!-- 		<property name="morceau" value="Vive le vent ..."/> -->
 <!-- 	</bean> -->
 
-	<bean id="guitariste" class="spring.formation.orchestre.Guitariste">
+	<bean id="guitariste" class="spring.formation.orchestre.Guitariste" init-method="apres">
 		<constructor-arg ref="guitare"/>
 		<constructor-arg value="Vive le vent ..."/>
 	</bean>
+	
+	<bean id="spectateurAspect" class="spring.formation.aspect.Spectateur"/>
+	
+	<aop:config>
+		<aop:aspect ref="spectateurAspect">
+			<aop:before method="assoir" pointcut="execution(* *.jouer())"/>
+		</aop:aspect>
+	</aop:config>
 
 </beans>

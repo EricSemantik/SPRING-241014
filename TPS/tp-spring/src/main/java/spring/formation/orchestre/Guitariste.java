@@ -42,4 +42,7 @@ public class Guitariste implements IMusicien {
 		this.morceau = morceau;
 	}
 
+	public void apres() {
+		System.out.println("Guitariste Post Construct : " + this.morceau);
+	}
 }
