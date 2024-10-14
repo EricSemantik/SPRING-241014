@@ -1,8 +1,17 @@
 package spring.formation.orchestre;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Pianiste implements IMusicien {
 
+	@Autowired
+	@Qualifier("piano")
 	private IInstrument instrument;
+	@Value("Bouba mon petit ourson")
 	private String morceau;
 
 	public Pianiste() {
@@ -14,6 +23,7 @@ public class Pianiste implements IMusicien {
 		super();
 		this.instrument = instrument;
 	}
+
 
 	public Pianiste(IInstrument instrument, String morceau) {
 		super();
@@ -31,6 +41,7 @@ public class Pianiste implements IMusicien {
 		return instrument;
 	}
 
+	
 	public void setInstrument(IInstrument instrument) {
 		this.instrument = instrument;
 	}

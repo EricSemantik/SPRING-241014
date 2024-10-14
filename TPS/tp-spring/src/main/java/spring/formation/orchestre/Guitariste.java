@@ -1,7 +1,5 @@
 package spring.formation.orchestre;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class Guitariste implements IMusicien {
 
 	private IInstrument instrument;
