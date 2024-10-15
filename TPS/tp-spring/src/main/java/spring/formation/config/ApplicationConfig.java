@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import spring.formation.orchestre.Guitare;
 import spring.formation.orchestre.Guitariste;
@@ -12,6 +13,7 @@ import spring.formation.orchestre.IMusicien;
 
 @Configuration
 @ComponentScan("spring.formation")
+@EnableAspectJAutoProxy
 public class ApplicationConfig {
 
 	@Bean
