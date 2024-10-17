@@ -9,7 +9,8 @@
 <body>
 	<section layout:fragment="monContenu">
 		<div class="jumbotron">
-			<h1 class="display-4">Bonjour le monde !</h1>
+			<h1 class="display-4" th:if="${monNom != null && monNom != ''}">Bien le bonjour [[${monNom}]] !</h1>
+			<h1 class="display-4" th:if="${monNom == null}">Bonjour le monde !</h1>
 		</div>
 	</section>
 </body>
