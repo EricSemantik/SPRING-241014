@@ -8,12 +8,14 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "utilisateur")
@@ -22,11 +24,12 @@ public class Utilisateur {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(length = 50, nullable = false, unique = true)
+	@NotEmpty(message="identifiant obligatoire")
 	private String identifiant;
 	@Column(name = "mot_de_passe", length = 100, nullable = false)
 	private String motDePasse;
 	private boolean active = true;
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
 	@JoinTable(name = "utilisateur_roles", joinColumns = @JoinColumn(name = "utilisateur_id"))
 	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
