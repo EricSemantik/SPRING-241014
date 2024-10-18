@@ -1,5 +1,7 @@
 package spring.formation.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
@@ -20,6 +22,7 @@ import jakarta.persistence.Table;
 @Table(name = "individu")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "type", length = 15)
+@JsonView(Views.ViewBasic.class)
 public abstract class Individu {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +42,7 @@ public abstract class Individu {
 	private Adresse adresse;
 	@OneToOne
 	@JoinColumn(name="utilisateur_id")
+	@JsonView(Views.ViewIndividu.class)
 	private Utilisateur utilisateur;
 
 	public Individu() {

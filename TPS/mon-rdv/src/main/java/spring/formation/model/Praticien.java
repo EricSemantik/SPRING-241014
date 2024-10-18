@@ -3,6 +3,8 @@ package spring.formation.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -15,6 +17,7 @@ import jakarta.persistence.OneToMany;
 
 @Entity
 @DiscriminatorValue("praticien")
+@JsonView(Views.ViewBasic.class)
 public class Praticien extends Individu {
 	@Enumerated(EnumType.STRING)
 	@Column(length = 10)
@@ -27,13 +30,17 @@ public class Praticien extends Individu {
 	private boolean carteBancaire;
 	@ManyToMany
 	@JoinTable(name = "praticien_lieu", joinColumns = @JoinColumn(name = "praticien_id"), inverseJoinColumns = @JoinColumn(name = "lieu_id"))
+	@JsonView(Views.ViewNone.class)
 	private List<Lieu> lieux = new ArrayList<Lieu>();
 	@ManyToMany
 	@JoinTable(name = "praticien_specialite", joinColumns = @JoinColumn(name = "praticien_id"), inverseJoinColumns = @JoinColumn(name = "specialite_id"))
+	@JsonView(Views.ViewNone.class)
 	private List<Specialite> specialites = new ArrayList<Specialite>();
 	@OneToMany(mappedBy = "praticien")
+	@JsonView(Views.ViewNone.class)
 	private List<Motif> motifs = new ArrayList<Motif>();
 	@OneToMany(mappedBy = "praticien")
+	@JsonView(Views.ViewNone.class)
 	private List<Consultation> consultations = new ArrayList<Consultation>();
 
 	public Praticien() {

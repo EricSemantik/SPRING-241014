@@ -3,6 +3,8 @@ package spring.formation.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -19,6 +21,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "utilisateur")
+@JsonView(Views.ViewBasic.class)
 public class Utilisateur {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +36,7 @@ public class Utilisateur {
 	@JoinTable(name = "utilisateur_roles", joinColumns = @JoinColumn(name = "utilisateur_id"))
 	@Column(name = "role", nullable = false)
 	@Enumerated(EnumType.STRING)
+	@JsonView(Views.ViewUtilisateur.class)
 	private Set<Role> roles = new HashSet<>();
 
 	public Utilisateur() {

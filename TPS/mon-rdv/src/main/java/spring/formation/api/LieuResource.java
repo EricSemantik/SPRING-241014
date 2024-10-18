@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import spring.formation.model.Lieu;
+import spring.formation.model.Views;
 import spring.formation.repository.ILieuRepository;
 
 @RestController
@@ -28,21 +31,25 @@ public class LieuResource {
 	}
 
 	@GetMapping("")
+	@JsonView(Views.ViewLieu.class)
 	public List<Lieu> getAll() {
 		return this.lieuRepo.findAll();
 	}
 
 	@GetMapping("/{id}")
+	@JsonView(Views.ViewLieu.class)
 	public Lieu get(@PathVariable Long id) {
 		return this.lieuRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 	
 	@GetMapping("/{id}/detail")
+	@JsonView(Views.ViewLieuDetail.class)
 	public Lieu getDetail(@PathVariable Long id) {
 		return this.lieuRepo.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 	}
 
 	@PostMapping("")
+	@JsonView(Views.ViewLieu.class)
 	public Lieu post(@RequestBody Lieu lieu) {
 		lieu = lieuRepo.save(lieu);
 
@@ -50,6 +57,7 @@ public class LieuResource {
 	}
 
 	@PutMapping("/{id}")
+	@JsonView(Views.ViewLieu.class)
 	public Lieu put(@RequestBody Lieu lieu, @PathVariable Long id) {
 		if (id != lieu.getId() || !lieuRepo.existsById(id)) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le lieu ne peut être mis à jour.");

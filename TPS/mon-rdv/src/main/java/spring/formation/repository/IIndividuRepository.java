@@ -13,7 +13,7 @@ import spring.formation.model.Secretaire;
 import spring.formation.repository.custom.IndividuRepositoryCustom;
 
 public interface IIndividuRepository extends JpaRepository<Individu, Long>, IndividuRepositoryCustom {
-	@Query("select p from Patient p")
+	@Query("select distinct p from Patient p left join fetch p.consultations")
 	List<Patient> findAllPatient();
 	
 	@Query("from Praticien p")
@@ -26,4 +26,8 @@ public interface IIndividuRepository extends JpaRepository<Individu, Long>, Indi
 	
 	@Query("select p from Praticien p join p.specialites spe where spe.nom = ?1")
 	List<Praticien> findAllPraticienBySpecialite(String nom);
+	
+	@Query("select distinct p from Patient p left join fetch p.consultations where p.id = ?1")
+	Optional<Patient> findPatientByIdWithConsultations(Long id);
+
 }

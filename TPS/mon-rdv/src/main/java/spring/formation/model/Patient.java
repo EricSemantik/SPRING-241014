@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -13,6 +15,7 @@ import jakarta.persistence.OneToMany;
 @Entity
 @DiscriminatorValue("patient")
 @NamedQuery(name="Patient.findAllPatient", query="select p from Patient p")
+@JsonView(Views.ViewBasic.class)
 public class Patient extends Individu {
 	@Column(name = "dt_naissance")
 	private LocalDate dtNaissance;
@@ -21,6 +24,7 @@ public class Patient extends Individu {
 	@Column(name = "numero_ss", length = 15)
 	private String numeroSS;
 	@OneToMany(mappedBy = "patient")
+	@JsonView(Views.ViewPatientDetail.class)
 	private List<Consultation> consultations = new ArrayList<Consultation>();
 
 	public Patient() {
