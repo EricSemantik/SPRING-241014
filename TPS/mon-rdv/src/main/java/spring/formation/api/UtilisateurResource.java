@@ -2,7 +2,11 @@ package spring.formation.api;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +19,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import spring.formation.api.request.ConnexionRequest;
+import spring.formation.api.response.ConnexionResponse;
+import spring.formation.config.jwt.JwtUtil;
 import spring.formation.model.Utilisateur;
 import spring.formation.model.Views;
 import spring.formation.repository.IUtilisateurRepository;
@@ -24,6 +31,9 @@ import spring.formation.repository.IUtilisateurRepository;
 public class UtilisateurResource {
 
 	private IUtilisateurRepository utilisateurRepo;
+	
+	@Autowired // Par défaut, ce manager n'existe pas dans le contexte, donc on le configure dans SecurityConfig
+	private AuthenticationManager authenticationManager;
 
 	public UtilisateurResource(IUtilisateurRepository utilisateurRepo) {
 		super();
@@ -69,4 +79,29 @@ public class UtilisateurResource {
 
 		utilisateurRepo.deleteById(id);
 	}
+	
+	@PostMapping("/connexion")
+	public ConnexionResponse connexion(@RequestBody ConnexionRequest connexionRequest) {
+		// On va demander à SPRING SECURITY de vérifier le username / password
+		// On a besoin d'un AuthenticationManager
+		// On utilisera la méthode authenticate, qui attend un Authentication
+		// Et on utilisera le type UsernamePasswordAuthenticationToken pour donner le username & le password
+		Authentication authentication =
+				new UsernamePasswordAuthenticationToken(connexionRequest.getUsername(), connexionRequest.getPassword());
+		
+		// On demande à SPRING SECURITY de vérifier ces informations de connexion
+		this.authenticationManager.authenticate(authentication);
+		
+		// Si on arrive ici, c'est que la connexion a fonctionné
+		ConnexionResponse response = new ConnexionResponse();
+		
+		// On génère un jeton pour l'utilisateur connecté
+		String token = JwtUtil.generate(authentication);
+		
+		response.setSuccess(true);
+		response.setToken(token); // On donne le jeton en réponse
+		
+		return response;
+	}
+
 }
